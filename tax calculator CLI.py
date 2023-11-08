@@ -1,51 +1,24 @@
 import platform
 import subprocess
-from tqdm import tqdm
 import sys, getopt
 import time
 
-#TODO: 
-# Check if program runs on linux
-# Check if depreciation 1 and 2 work
-# Check if interest c and s work
-# ~~Make tax function~~
-# Find someone willing to test on Mac (Maybe use a cracked edition?) 
-# Find a operating system that is none of these three (Maybe redstar?)
-# Do different countries have different ways of paying tax? 
-# Make sure that the program knows how to deal with strings when asking for int (Using try and except?)
-
 
 def usage():
-    print("\nParameters: -f/--fast_start, -r/--regular\nUsage: -f is for fast bootup, -r is for normal bootup")
-    print("Supported operating systems for loading bar: Linux, Windows and MacOS")
+    print("\nParameters: -r/--regular\nUsage: -r is for normal bootup")
+    print("This is a simple program for calculating tax based off a ATO taxtable from 2021")
     sys.exit()
 
 
 def plsRun(argv):
     try:
-        opts, args = getopt.getopt(argv, "hfr", ["fast_start", "regular"])
+        opts, args = getopt.getopt(argv, "hr", ["regular"])
         for opt, arg in opts:
             if opt in ['-h']:
                 usage()
-            elif opt in ['-f','--fast_start']:
+            elif opt in ['-r','--regular']:
                 main()
-            elif opt in ['-r', '--regular']:
-                system = platform.system()
-                tasks = ['Import math', 'Import platform', 'Import subprocess', 'Import tqdm.auto', 'Import sys', 'Import os', 'Initialising math', 'Initialising main', 'Executing order 66', 'Executing subroutine -f', 'Loading...']
-                # Set the total number of iterations to run
-                total_iterations = 11
-
-                # Create a progress bar using tqdm
-                with tqdm(total=total_iterations, unit='s', desc='Task') as pbar:
-                    # Loop through the tasks
-                    for task in tasks:
-                        # Update the progress bar and task description
-                        pbar.update(1)
-                        pbar.set_description(task)
-                        
-                        # Sleep for 1 second to simulate a task taking time to complete
-                        time.sleep(1)
-
+                
                 if system == 'Linux' or system == 'Darwin':
                     subprocess.run(['clear'])
                     main()
@@ -68,17 +41,6 @@ def close():
         shtdwn()
 
 def shtdwn():
-    ends = ['Removing tar -xzf', 'Clearing session data', 'Disabling packages', 'Removing all bloat', 'Wiping memory', 'Clearning caches', 'Denying access to port 22', 'Revoking permission protocol 1123', 'Revoking chmod 49', 'Executing shutdown -s', 'Loading...']
-    total_iterations = 11
-    with tqdm(total=total_iterations, unit='tasks', desc='Task') as pbar:
-        # Loop through the tasks
-        for end in ends:
-            # Update the progress bar and task description
-            pbar.update(1)
-            pbar.set_description(end)
-            
-            # Sleep for 1 second to simulate a task taking time to complete
-            time.sleep(1)
     system = platform.system()
     if system == 'Linux' or system == 'Darwin':
         subprocess.run(['clear'])
@@ -104,7 +66,6 @@ def main():
     if response == '1':
         n_step = input("Do you know the current value of the item? [y/n] ").lower()
         if n_step == 'y':
-            # rate = float(input("Please input the interest rate as a number: "))
             valid = False
             while not valid:
                 try:
@@ -115,11 +76,8 @@ def main():
                     valid = True
                 except ValueError:
                     print("One or more of these values are not integers")
-            #result = val * (1 - rate / 100) ** years
             fl = input("Would you like the result to be rounded? [y/n] ").lower()
             if fl == "y":
-                # final = val-result
-                # print("Result: ${:.2f}".format(final))
                 print("Value: ${:.2f}".format(result))
                 print("Value decrease by " + str(result) + " per year")
                 cont = input("Would you like to start the calculator again? [y/n] ")
@@ -129,7 +87,6 @@ def main():
                     print("Exiting system")
                     shtdwn()
             elif fl == "n":
-                # print("Result: " + str(val-result))
                 print("Value: " + str(result))
                 print("Value decrease by " + str(result) + " per year")
                 cont = input("Would you like to start the calculator again? [y/n] ")
@@ -160,8 +117,6 @@ def main():
                     valid = True
                 except ValueError:
                     print("One or more of these values are not integers")
-            #cur = float(input("Please input current value: "))
-            #result = (val-cur)/years
             rate = rate/100
             result = val-(years*(val*rate))
             fl = input("Would you like the result to be rounded? [y/n] ").lower()
